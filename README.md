@@ -1,0 +1,1 @@
+# ecs-gpu-optimized-ami-auto-update
