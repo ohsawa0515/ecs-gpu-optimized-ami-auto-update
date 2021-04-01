@@ -2,6 +2,14 @@ AWSTemplateFormatVersion: "2010-09-09"
 Description: "Create custom ECS-GPU Optimized AMI when formal AMI updated"
 
 Parameters:
+  ImageName:
+    Type: String
+    Default: custom-amzn2-ami-ecs-gpu-hvm-x86_64-ebs
+    Description: The AMI name to be created.It will created with `ImageName`-<timestamp>.
+  SourceAmiNameFilter:
+    Type: String
+    Default: amzn2-ami-ecs-gpu-hvm-*-x86_64-ebs
+    Description: Source AMI name filter.
   CodeBuildProjectName:
     Type: String
     Default: packer-build-ecs-gpu-optimized-ami
@@ -16,7 +24,7 @@ Parameters:
     Description: Security ID that run CodeBuild project.
   PackerVersion:
     Type: String
-    Description: Packer version
+    Description: Packer version.
     Default: 1.7.0
 
 Resources:
@@ -80,6 +88,12 @@ Resources:
           - Name: "PACKER_VERSION"
             Type: "PLAINTEXT"
             Value: !Ref PackerVersion
+          - Name: "IMAGE_NAME"
+            Type: "PLAINTEXT"
+            Value: !Ref ImageName
+          - Name: "SOURCE_AMI_NAME_FILTER"
+            Type: "PLAINTEXT"
+            Value: !Ref SourceAmiNameFilter
         Image: "aws/codebuild/standard:5.0"
         ImagePullCredentialsType: "CODEBUILD"
         PrivilegedMode: false

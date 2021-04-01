@@ -1,6 +1,7 @@
 {
     "variables": {
-        "ami_name": "custom-amzn2-ami-ecs-gpu-hvm-x86_64-ebs-{{isotime \"20060102150405\"}}",
+        "ami_name": "{{env `IMAGE_NAME`}-{{isotime \"20060102150405\"}}",
+        "filter_image_name": "{{env `SOURCE_AMI_NAME_FILTER`}}",
         "region": "{{env `AWS_REGION`}}",
         "vpc_id": "{{env `VPC_ID`}}",
         "subnet_id": "{{env `SUBNET_ID`}}",
@@ -18,7 +19,7 @@
             "source_ami_filter": {
                 "filters": {
                     "virtualization-type": "hvm",
-                    "name": "amzn2-ami-ecs-gpu-hvm-*-x86_64-ebs",
+                    "name": "{{user `filter_image_name`}}",
                     "root-device-type": "ebs"
                 },
                 "owners": [
