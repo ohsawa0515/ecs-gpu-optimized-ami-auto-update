@@ -26,6 +26,9 @@ Parameters:
     Type: String
     Description: Packer version.
     Default: 1.7.0
+  Foo:
+    Type: String
+    Default: Bar
 
 Resources:
   CodeBuild:
@@ -99,7 +102,7 @@ Resources:
         PrivilegedMode: false
         Type: "LINUX_CONTAINER"
       ServiceRole: !GetAtt CodeBuildIAMRole.Arn
-      TimeoutInMinutes: 60
+      TimeoutInMinutes: "60"
       QueuedTimeoutInMinutes: 480
       EncryptionKey: !Sub "arn:aws:kms:${AWS::Region}:${AWS::AccountId}:alias/aws/s3"
       VpcConfig:
